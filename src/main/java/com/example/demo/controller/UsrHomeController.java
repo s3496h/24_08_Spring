@@ -1,41 +1,31 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.example.demo.vo.Article;
 @Controller
 public class UsrHomeController {
-	int count = -1;
-	
-	@RequestMapping("/usr/home/main")
+
+	@RequestMapping("/usr/home/getArticle")
 	@ResponseBody
-	public String showMain() {
-		return "안녕하세요";
+	public Article getArticle() {
+
+		Article article = new Article(1, "제목1", "내용1");
+
+		return article;
 	}
 
-	@RequestMapping("/usr/home/main2")
-	@ResponseBody
-	public String showMain2() {
-		return "잘가";
-	}
-
-	@RequestMapping("/usr/home/main3")
-	@ResponseBody
-	public int showMain3() {
-		int a = 1;
-		int b = 2;
-		return a + b;
-	}
-	@RequestMapping("/usr/home/main4")
-	@ResponseBody
-	public int showMain4() {
-		
-		count++;
-		
-		return count;
-		
-	}
 
 
 }
+
