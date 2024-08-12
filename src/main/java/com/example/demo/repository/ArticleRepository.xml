@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.repository.ArticleRepository">
+	<update id="modifyArticle">
+		UPDATE article
+		<set>
+			<if test="title != null and title != ''">title = #{title},</if>
+			<if test="body != null and body != ''">`body` = #{body},</if>
+			updateDate = NOW()
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<insert id="writeArticle">
+		INSERT INTO article
+		SET regDate = NOW(),
+		updateDate =
+		NOW(),
+		title = #{title},
+		`body` = #{body}
+	</insert>
+
+	<select id="getArticles" resultType="Article">
+		SELECT *
+		FROM article
+		ORDER BY
+		id DESC
+	</select>
+
+	<select id="getArticleById" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE id = #{id}
+	</select>
+</mapper>
