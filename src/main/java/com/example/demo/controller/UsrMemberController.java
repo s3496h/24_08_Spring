@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Member;
+import com.example.demo.vo.ResultData;
 
 @Controller
 public class UsrMemberController {
@@ -22,38 +23,40 @@ public class UsrMemberController {
 			String email) {
 
 		if (Ut.isEmptyOrNull(loginId)) {
-			return "loginId를 입력 해주세요";
+			return ResultData.from("F-1", Ut.f("loginId를 입력해주세요", loginId));
 		}
 		if (Ut.isEmptyOrNull(loginPw)) {
-			return "loginPw를 입력 해주세요";
+			return ResultData.from("F-1", Ut.f("loginPw를 입력해주세요", loginId));
 		}
 		if (Ut.isEmptyOrNull(name)) {
-			return "name를 입력해주세요";
+			return ResultData.from("F-1", Ut.f("name를 입력해주세요", loginId));
 		}
 		if (Ut.isEmptyOrNull(nickname)) {
-			return "nickname를 입력해주세요";
+			return ResultData.from("F-1", Ut.f("nickname를 입력해주세요", loginId));
 		}
 		if (Ut.isEmptyOrNull(cellphoneNum)) {
-			return "cellphoneNum를 입력해주세요";
+			return ResultData.from("F-1", Ut.f("cellphoneNum를 입력해주세요", loginId));
 		}
 		if (Ut.isEmptyOrNull(email)) {
-			return "email를 입력해주세요";
+			return ResultData.from("F-1", Ut.f("email를 입력해주세요", loginId));
 		}
 
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (id == -1) {
-			return Ut.f("이미 사용중인 아이디(%s)입니다.", loginId);
+			
+			return ResultData.from("F-1", Ut.f("이미 사용중인 아이디(%s)입니다.", loginId));
 		}
 	
 		if (id == -2) {
-			return Ut.f("이미 사용중인 이름(%s)과 이메일(%s)", name, email);
+			
+			return ResultData.from("F-1",Ut.f("이미 사용중인 이름(%s)과 이메일(%s)", loginId));
 		}
 
 
 		Member member = memberService.getMemberById(id);
 
-		return member;
+		 return ResultData.from("S-1", Ut.f("%d번 회원 등록됨", id), member);
 	}
 
 }
