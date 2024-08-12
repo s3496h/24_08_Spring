@@ -27,7 +27,7 @@ public class Ut {
 
 		return false;
 	}
-	public static Object f(String format, Object... args) {
+	public static String f(String format, Object... args) {
 
 		return String.format(format, args);
 	}
