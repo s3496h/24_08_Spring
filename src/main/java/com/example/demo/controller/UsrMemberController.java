@@ -70,14 +70,14 @@ public class UsrMemberController {
 
 		httpSession.setAttribute("loginedMemberId", member.getId());
 
-		return ResultData.from("S-1", Ut.f("%s님 환영합니다", member.getNickname()), member);
+		return ResultData.from("S-1", Ut.f("%s님 환영합니다", member.getNickname()), "로그인 한 회원", member);
 	}
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Member> doJoin(HttpSession httpSession,String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
-		
+	public ResultData<Member> doJoin(HttpSession httpSession, String loginId, String loginPw, String name,
+			String nickname, String cellphoneNum, String email) {
+
 		boolean isLogined = false;
 
 		if (httpSession.getAttribute("loginedMemberId") != null) {
@@ -115,7 +115,7 @@ public class UsrMemberController {
 
 		Member member = memberService.getMemberById((int) doJoinRd.getData1());
 
-		return ResultData.newData(doJoinRd, member);
+		return ResultData.newData(doJoinRd, "새로 생성된 member", member);
 	}
 
 }
