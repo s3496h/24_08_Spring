@@ -75,8 +75,18 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData<Member> doJoin(HttpSession httpSession,String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
+		
+		boolean isLogined = false;
+
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+		}
+
+		if (isLogined) {
+			return ResultData.from("F-A", "이미 로그인 함");
+		}
 
 		if (Ut.isEmptyOrNull(loginId)) {
 			return ResultData.from("F-1", "loginId 입력 x");
