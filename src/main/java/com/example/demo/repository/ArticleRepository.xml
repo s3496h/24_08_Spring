@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.repository.ArticleRepository">
 	<update id="modifyArticle">
-		UPDATE article
+		UPDATE article 
 		<set>
 			<if test="title != null and title != ''">title = #{title},</if>
 			<if test="body != null and body != ''">`body` = #{body},</if>
@@ -16,8 +16,8 @@
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),
-		updateDate =
-		NOW(),
+		updateDate = NOW(),
+		memberId = #{memberId},
 		title = #{title},
 		`body` = #{body}
 	</insert>
