@@ -27,7 +27,13 @@
 			<ul class="flex">
 				<li><a class="hover:underline" href="/">HOME</a></li>
 				<li><a class="hover:underline" href="../article/list">LIST</a></li>
-				<li><a class="hover:underline" href="../member/login">LOGIN</a></li>
+				<c:if test="${!rq.isLogined() }">
+					<li><a class="hover:underline" href="../member/login">LOGIN</a></li>
+				</c:if>
+				<c:if test="${rq.isLogined() }">
+					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
+						href="../member/doLogout">LOGOUT</a></li>
+				</c:if>
 			</ul>
 		</div>
 	</header>
