@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,14 +9,14 @@
 <script src="/resource/common.js" defer="defer"></script>
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <!-- 폰트어썸 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <!-- 폰트어썸 FREE 아이콘 리스트 : https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free -->
-
 <!-- 테일윈드 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
 <!-- 테일윈드 치트시트 : https://nerdcave.com/tailwind-cheat-sheet -->
+<!-- daisyUI -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.12.10/full.css" />
 </head>
 <body>
 	<header>
@@ -26,16 +25,27 @@
 			<div class="flex-grow"></div>
 			<ul class="flex">
 				<li><a class="hover:underline" href="/">HOME</a></li>
-				<li><a class="hover:underline" href="../article/list">LIST</a></li>
+				
+				<li>
+					<div class="dropdown dropdown-hover">
+						<div tabindex="0" role="button">LIST</div>
+						<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+							<li><a href="../article/list?boardId=1">NOTICE</a></li>
+							<li><a href="../article/list?boardId=2">FREE</a></li>
+							<li><a href="../article/list?boardId=3">QnA</a></li>
+						</ul>
+					</div>
+				</li>
 				<c:if test="${!rq.isLogined() }">
 					<li><a class="hover:underline" href="../member/login">LOGIN</a></li>
+					<li><a class="hover:underline" href="../member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
+					<li><a class="hover:underline" href="../article/write">WRITE</a></li>
 					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
 						href="../member/doLogout">LOGOUT</a></li>
 				</c:if>
 			</ul>
 		</div>
 	</header>
-
 	<h1>${pageTitle }</h1>
