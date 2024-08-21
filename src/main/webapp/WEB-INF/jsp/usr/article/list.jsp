@@ -21,7 +21,8 @@
 						<option value="title">title</option>
 						<option value="body">body</option>
 						<option value="title,body">title+body</option>
-						<option value="nickname">nicnkname</option>
+
+						<option value="writer">writer</option>
 					</select> <label class="ml-3 input input-bordered input-sm flex items-center gap-2"> <input type="text"
 						placeholder="Search" name="searchKeyword" value="${param.searchKeyword }" />
 						<button type="submit">

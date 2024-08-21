@@ -25,10 +25,12 @@
 			<div class="flex-grow"></div>
 			<ul class="flex">
 				<li><a class="hover:underline" href="/">HOME</a></li>
-				
+
 				<li>
 					<div class="dropdown dropdown-hover">
-						<div tabindex="0" role="button">LIST</div>
+						<div tabindex="0" role="button">
+							<a href="../article/list?boardId=1&page=1">LIST</a>
+						</div>
 						<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
 							<li><a href="../article/list?boardId=1">NOTICE</a></li>
 							<li><a href="../article/list?boardId=2">FREE</a></li>
@@ -36,12 +38,12 @@
 						</ul>
 					</div>
 				</li>
-				
+
 				<c:if test="${!rq.isLogined() }">
 					<li><a class="hover:underline" href="../member/login">LOGIN</a></li>
 					<li><a class="hover:underline" href="../member/join">JOIN</a></li>
 				</c:if>
-				
+
 				<c:if test="${rq.isLogined() }">
 					<li><a class="hover:underline" href="../article/write">WRITE</a></li>
 					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
