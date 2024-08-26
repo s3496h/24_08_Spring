@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.ReactionPointService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
@@ -31,6 +32,10 @@ public class UsrArticleController {
 
 	@Autowired
 	private BoardService boardService;
+	
+
+	@Autowired
+	private ReactionPointService reactionPointService;
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
@@ -39,11 +44,21 @@ public class UsrArticleController {
 		
 	 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		
+		ResultData usersReactionRd = reactionPointService.usersReaction(rq.getLoginedMemberId(), "article", id);
+
+		if (usersReactionRd.isSuccess()) {
+			model.addAttribute("userCanMakeReaction", usersReactionRd.isSuccess());
+		}
 
 		model.addAttribute("article", article);
-
+		model.addAttribute("isAlreadyAddGoodRp",
+				reactionPointService.isAlreadyAddGoodRp(rq.getLoginedMemberId(), id, "article"));
+		model.addAttribute("isAlreadyAddBadRp",
+				reactionPointService.isAlreadyAddBadRp(rq.getLoginedMemberId(), id, "article"));
 		return "usr/article/detail";
 	}
+
 	
 	@RequestMapping("/usr/article/doIncreaseHitCountRd")
 	@ResponseBody
@@ -55,7 +70,10 @@ public class UsrArticleController {
 			return increaseHitCountRd;
 		}
 
-		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
+		ResultData rd = ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
+		
+		rd.setData2("조회수가 증가된 게시물 번호",id);
+		return rd;
 	}
 
 	@RequestMapping("/usr/article/modify")
@@ -167,7 +185,7 @@ public class UsrArticleController {
 			@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "title,body")String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "")String searchKeyword) throws IOException {
-
+			
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Board board = boardService.getBoardById(boardId);
@@ -181,6 +199,7 @@ public class UsrArticleController {
 		int itemsInAPage = 10;
 
 		int pagesCount = (int) Math.ceil(articlesCount / (double) itemsInAPage);
+		
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page,searchKeywordTypeCode,searchKeyword);
 
@@ -188,7 +207,7 @@ public class UsrArticleController {
 			return rq.historyBackOnView("없는 게시판임");
 
 		}
-
+              
 		model.addAttribute("articles", articles);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("pagesCount", pagesCount);
@@ -200,4 +219,5 @@ public class UsrArticleController {
 
 		return "usr/article/list";
 	}
+	
 }

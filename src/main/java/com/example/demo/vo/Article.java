@@ -19,6 +19,10 @@ public class Article {
 	private int hitCount;
 
 	private String extra__writer;
+	
+	private String goodReactionPoint;
+	private String badReactionPoint;
+	
 	private boolean userCanModify;
 	private boolean userCanDelete;
 }
