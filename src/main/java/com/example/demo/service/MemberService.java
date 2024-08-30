@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.util.Ut;
+import com.example.demo.vo.Article;
 import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 
@@ -47,9 +48,23 @@ public class MemberService {
 	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
-
+	
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
 	}
 
+	public ResultData modify(int loginedMemberId, String loginPw, String name, String nickname, String cellphoneNum,
+			String email) {
+
+		memberRepository.modify(loginedMemberId, loginPw, name, nickname, cellphoneNum, email);
+
+		return ResultData.from("S-1", "회원정보 수정 완료");
+	}
+
+	public ResultData modifyWithoutPw(int loginedMemberId, String name, String nickname, String cellphoneNum,
+			String email) {
+		memberRepository.modifyWithoutPw(loginedMemberId, name, nickname, cellphoneNum, email);
+
+		return ResultData.from("S-1", "회원정보 수정 완료");
+	}
 }

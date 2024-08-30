@@ -3,10 +3,15 @@
 
 <c:set var="pageTitle" value="${board.code } LIST"></c:set>
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 <hr />
+
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
+	
+	
+		<%-- 		${articles} --%>
 
 		<div class="mb-4 flex">
 			<div>${articlesCount }개</div>
@@ -46,7 +51,7 @@
 					<th style="text-align: center;">Title</th>
 					<th style="text-align: center;">Writer</th>
 					
-					
+				
 					<th style="text-align: center;">Like</th>
 					<th style="text-align: center;">Dislike</th>
 				</tr>
@@ -56,7 +61,13 @@
 					<tr class="hover">
 						<td style="text-align: center;">${article.id}</td>
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
-						<td style="text-align: center;"><a class="hover:underline" href="detail?id=${article.id}">${article.title}</a></td>
+												<td style="text-align: center;">
+							<a class="hover:underline" href="detail?id=${article.id}">${article.title} <c:if
+									test="${article.extra__repliesCount > 0 }">
+									<span style="color: red;">[${article.extra__repliesCount }]</span>
+								</c:if>
+							</a>
+						</td>
 						<td style="text-align: center;">${article.extra__writer}</td>
 						
 						<td style="text-align: center;">${article.goodReactionPoint}</td>
